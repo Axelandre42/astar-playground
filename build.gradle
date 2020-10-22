@@ -1,0 +1,8 @@
+plugins {
+    id 'application'
+}
+
+mainClassName = "ovh.axelandre42.astar.App"
+
+group 'ovh.axelandre42'
+version '1.0-SNAPSHOT'
