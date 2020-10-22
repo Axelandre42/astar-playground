@@ -60,6 +60,13 @@ public class Node implements Comparable<Node> {
 	}
 
 	@Override
+	public String toString() {
+		return "(" + position.getX() + "," + position.getY() + ")" +
+				", g=" + gScore +
+				", f=" + fScore;
+	}
+
+	@Override
 	public int compareTo(Node node) {
 		return this.getFScore() - node.getFScore();
 	}

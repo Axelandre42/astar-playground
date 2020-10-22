@@ -3,6 +3,7 @@ package ovh.axelandre42.astar;
 import ovh.axelandre42.astar.tile.AbstractTile;
 
 import javax.imageio.ImageIO;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.awt.image.Raster;
 import java.io.IOException;
@@ -26,6 +27,10 @@ public class Grid implements Iterable<AbstractTile> {
 		nodes.put(node.getPosition(), node);
 	}
 
+	public void remove(Position position) {
+		nodes.remove(position);
+	}
+
 	public void load(InputStream in, Function<Pixel, AbstractTile> mapper) throws IOException {
 		BufferedImage image = ImageIO.read(in);
 		Raster raster = image.getRaster();
@@ -42,20 +47,14 @@ public class Grid implements Iterable<AbstractTile> {
 		return nodes.get(position);
 	}
 
-	public Set<AbstractTile> getNeighbors(AbstractTile point) {
-		Set<AbstractTile> neighbors = new HashSet<>();
-		for (Direction direction : Direction.values()) {
-			neighbors.add(getAt(point.getPosition().getAdjacentPosition(direction)));
-		}
-		return neighbors;
-	}
-
 	public Set<Position> getNeighborsByPosition(Position point) {
 		Set<Position> neighbors = new HashSet<>();
 		for (Direction direction : Direction.values()) {
-			AbstractTile tile = getAt(point.getAdjacentPosition(direction));
-			if (tile != null && tile.isWalkable()) {
-				neighbors.add(point.getAdjacentPosition(direction));
+			Position next = point.getAdjacentPosition(direction);
+			if (next.getX() < 0 || next.getX() >= 80 || next.getY() < 0 || next.getY() >= 80) continue;
+			AbstractTile tile = getAt(next);
+			if (tile == null || tile.isWalkable()) {
+				neighbors.add(next);
 			}
 		}
 		return neighbors;
