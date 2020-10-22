@@ -7,10 +7,11 @@ import java.io.IOException;
 public class App {
 	public static void main(String[] args) throws IOException {
 		JFrame frame = new JFrame();
-		Map map = new Map();
+		GameMap map = new GameMap();
 		map.load(new FileInputStream("layer1.bmp"));
+		map.run();
 
-		frame.setSize(820, 860);
+		frame.setSize(810, 840);
 		frame.add(map);
 		frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		frame.setVisible(true);

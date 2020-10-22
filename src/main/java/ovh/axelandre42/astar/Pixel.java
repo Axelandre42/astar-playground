@@ -1,14 +1,19 @@
 package ovh.axelandre42.astar;
 
-public class Pixel extends Point {
+public class Pixel {
 	private final int sample;
+	private final Position position;
 
-	public Pixel(int x, int y, int sample) {
-		super(x, y);
+	public Pixel(int sample, Position position) {
 		this.sample = sample;
+		this.position = position;
 	}
 
 	public int getSample() {
 		return sample;
+	}
+
+	public Position getPosition() {
+		return position;
 	}
 }
