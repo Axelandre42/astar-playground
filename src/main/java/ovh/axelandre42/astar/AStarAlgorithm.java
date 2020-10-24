@@ -1,70 +1,64 @@
 package ovh.axelandre42.astar;
 
-import ovh.axelandre42.astar.tile.Walk;
-import ovh.axelandre42.astar.tile.WalkType;
-
-import java.util.*;
-
 public class AStarAlgorithm {
+/*
+	public static final int WEIGHT = 5;
 
-	public static final int WEIGHT = 10;
+	private static void put(Target target, Tile tile) {
+		target.getLayer().getMap().put(target.getPosition(), tile);
+	}
 
-	public static Set<Position> findPath(Grid grid, Position start, Position goal, GameMap gameMap) throws InterruptedException {
+	public static Set<Target> findPath(Target start, Target goal) throws InterruptedException {
 		PriorityQueue<Node> open = new PriorityQueue<>();
 		Node startNode = new Node(start, 0, 0, null);
 		open.add(startNode);
 
-		Map<Position, Node> visited = new HashMap<>();
+		Map<Target, Node> visited = new HashMap<>();
 		visited.put(start, startNode);
 
 		while (!open.isEmpty()) {
 			Node current = open.poll();
-			grid.put(new Walk(current.getPosition(), WalkType.CURRENT));
-			grid.put(new Walk(start, WalkType.START));
-			grid.put(new Walk(goal, WalkType.END));
-			gameMap.repaint();
-			Thread.sleep(1);
+			put(current.getTarget(), new Walk(WalkType.CURRENT));
+			put(start, new Walk(WalkType.START));
+			put(goal, new Walk(WalkType.END));
 
-			if (current.getPosition().equals(goal)) {
-				Set<Position> result = new HashSet<>();
+			if (current.getTarget().equals(goal)) {
+				Set<Target> result = new HashSet<>();
 				while ((current = current.getParent()) != null) {
-					result.add(current.getPosition());
-					grid.put(new Walk(current.getPosition(), WalkType.PATH));
-					grid.put(new Walk(start, WalkType.START));
-					grid.put(new Walk(goal, WalkType.END));
-					gameMap.repaint();
-					Thread.sleep(1);
+					result.add(current.getTarget());
 				}
 
 				return result;
 			}
 
-			for (Position position : grid.getNeighborsByPosition(current.getPosition())) {
+			MapLayer layer = current.getTarget().getLayer();
+			Set<Target> neighbors = layer.getMap().getNeighborsByPosition(current.getTarget());
+			for (Target target : neighbors) {
 
 				int tentativeGScore = current.getGScore() + 1;
-				if (visited.containsKey(position)) {
-						if (tentativeGScore < visited.get(position).getGScore()) {
-						Node neighbor = visited.get(position);
+				if (visited.containsKey(target)) {
+						if (tentativeGScore < visited.get(target).getGScore()) {
+						Node neighbor = visited.get(target);
 						neighbor.setParent(current);
 						neighbor.setGScore(tentativeGScore);
-						neighbor.setFScore(neighbor.getGScore() + WEIGHT * position.distance(goal));
+						neighbor.setFScore(neighbor.getGScore() + WEIGHT * target.getPosition().distance(goal.getPosition()));
 						if (!open.contains(neighbor)) {
-							grid.put(new Walk(position, WalkType.OPEN));
+							put(target, new Walk(WalkType.OPEN));
 							open.add(neighbor);
 						}
 					}
 					continue;
 				}
-				Node node = new Node(position, tentativeGScore, tentativeGScore + WEIGHT * position.distance(goal),
-						current);
-				grid.put(new Walk(position, WalkType.CLOSED));
-				visited.put(position, node);
-				grid.put(new Walk(position, WalkType.OPEN));
+				Node node = new Node(target, tentativeGScore,
+						tentativeGScore + WEIGHT * target.getPosition().distance(goal.getPosition()), current);
+				put(target, new Walk(WalkType.CLOSED));
+				visited.put(target, node);
+				put(target, new Walk(WalkType.OPEN));
 				open.add(node);
 			}
-			grid.put(new Walk(current.getPosition(), WalkType.CLOSED));
+			put(current.getTarget(), new Walk(WalkType.CLOSED));
 		}
 
 		return null;
-	}
+	}*/
 }
